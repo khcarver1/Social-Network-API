@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model, type } = require('mongoose');
 
 const UserSchema = new Schema(
   {
@@ -12,7 +12,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique
+      unique: true
       //match stuff here
     },
     thoughts: {
@@ -40,7 +40,7 @@ const FriendCountSchema = new Schema(
       get: createdAtVal => dateFormat(createdAtVal)
     },
     // use ReplySchema to validate data for a reply
-    replies: [ReplySchema]
+    // replies: [ReplySchema]
   },
   {
     toJSON: {
@@ -51,10 +51,10 @@ const FriendCountSchema = new Schema(
   }
 );
 
-FriendCountSchema.virtual('username').get(function() {
+FriendCountSchema.virtual('username').get(function () {
   return this.username.length;
 });
 
-const User = model('user', UserSchema);
+const User = model('User', UserSchema);
 
 module.exports = User;
