@@ -20,7 +20,7 @@ const thoughtSchema = new Schema(
     },
     reactions: {
       type: Array,
-      reactions: [reactionSchema]
+      // reactions: [reactionSchema]
     },
   },
   {
@@ -34,18 +34,19 @@ const thoughtSchema = new Schema(
 );
 
 // get total count of comments and replies on retrieval
-thoughtSchema.virtual('reactionCount').get(function () {
-  return this.thought.reduce(
-    (total, thought) => total + thought.reactions.length + 1,
-    0
-  );
-});
+// thoughtSchema.virtual('reactionCount').get(function () {
+//   return this.thought.reduce(
+//     (total, thought) => total + thought.reactions.length + 1,
+//     0
+//   );
+// });
 
 const reactionSchema = new Schema (
   {
     reactionId: {
-      ObjectId: Schema.ObjectId,
-      default: new ObjectId
+      ObjectId: Schema.ObjectId
+      //below isn't working for some reason
+      // default: new ObjectId
     },
     reactionBody: {
       type: String,

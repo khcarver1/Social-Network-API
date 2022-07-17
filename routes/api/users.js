@@ -1,15 +1,17 @@
 const router = require('express').Router();
 const User = require('../../models/User');
 
-
 router.get('/', (req, res) => {
     //get all users
     User.find({}).then((userData) => {
         res.json(userData);
     });
 });
-router.get('/_id', async (req, res) => {
+router.get('/:id', async ({ params }, res) => {
     //get all users by _id and return thought and friend data
+    User.find({ _id: params.id }).then((userData) => {
+        res.json(userData);
+    })
 });
 router.post('/', async (req, res) => {
     //post a new user, example:
@@ -17,21 +19,24 @@ router.post('/', async (req, res) => {
     //"email": ""
     User.create(req.body).then((newUser) => {
         res.json(newUser);
+        console.log('*** Successfully created user *** ' + userData);
     })
 });
-router.put('/', async (req, res) => {
+router.put('/update/:id', ({ params, body }, res) => {
     //update a user by it's _id
-    User.findOneAndUpdate()
+    User.findOneAndUpdate({ _id: params.id }, body, { new: true }).then((updatedUserData) => {
+        res.json(updatedUserData);
+        console.log('*** Successfully updated user ***');
+    });
 });
-router.delete('/delete/:id', async ({params}, res) => {
+router.delete('/delete/:id', async ({ params }, res) => {
     //delete a user by it's _id
     // bonus: remove a users thoughts when deleted
     User.findOneAndDelete({ _id: params.id }).then((userData) => {
         res.json(userData);
-    })
+        console.log('*** Successfully deleted user *** ' + userData);
+    });
 });
-
-
 
 router.post('/api/users/:userId/friends/:friendId', async (req, res) => {
     //add a new friend to a user's friend list
