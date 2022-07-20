@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     //"email": ""
     User.create(req.body).then((newUser) => {
         res.json(newUser);
-        console.log('*** Successfully created user *** ' + userData);
+        console.log('*** Successfully created user *** ' + newUser);
     })
 });
 router.put('/update/:id', ({ params, body }, res) => {
@@ -38,8 +38,15 @@ router.delete('/delete/:id', async ({ params }, res) => {
     });
 });
 
-router.post('/api/users/:userId/friends/:friendId', async (req, res) => {
-    //add a new friend to a user's friend list
+router.post('/:userId/friends/:friendId', ( req, res ) => {
+    
+    User.findOneAndUpdate({ _id: req.params.userId }, { new: true }).then((newFriendData) => {
+        userToUpdate = { _id: req.friends }
+        // userToUpdate.friends.push(req.params.friendId);
+        console.log(userToUpdate);
+        res.json({friends: req.params.friendId});
+        console.log({friends: req.params.friendId});
+    });
 });
 router.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
     //remove a friend from a user's friend list

@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Thought = require('../../models/Thought');
 
-
 //get all thoughts
 
 router.get('/', (req, res) => {

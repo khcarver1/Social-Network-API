@@ -16,43 +16,24 @@ const UserSchema = new Schema(
       //match stuff here
     },
     thoughts: {
-      type: Array
+      type: Array,
+      ref: 'Thought'
     },
     friends: {
-      type: Array
+      type: Array,
+      ref: 'User'
     }
-  }
-);
-
-const FriendCountSchema = new Schema(
-  {
-    writtenBy: {
-      type: String,
-      required: true
-    },
-    commentBody: {
-      type: String,
-      required: true
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: createdAtVal => dateFormat(createdAtVal)
-    },
-    // use ReplySchema to validate data for a reply
-    // replies: [ReplySchema]
   },
   {
     toJSON: {
-      virtuals: true,
-      getters: true
+      virtuals: true
     },
     id: false
   }
 );
 
-FriendCountSchema.virtual('username').get(function () {
-  return this.username.length;
+UserSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
 });
 
 const User = model('User', UserSchema);
