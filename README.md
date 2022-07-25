@@ -1,9 +1,29 @@
-GIVEN a social network API
-WHEN I enter the command to invoke the application
-THEN my server is started and the Mongoose models are synced to the MongoDB database
-WHEN I open API GET routes in Insomnia for users and thoughts
-THEN the data for each of these routes is displayed in a formatted JSON
-WHEN I test API POST, PUT, and DELETE routes in Insomnia
-THEN I am able to successfully create, update, and delete users and thoughts in my database
-WHEN I test API POST and DELETE routes in Insomnia
-THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list   
+
+# project title 
+Social Network API
+
+## Description
+A backend tool for social networking, just the basics.
+
+## Installation
+clone the repo and go for it!
+
+## Usage
+Helps new projects get off the ground.
+
+## Tests
+Routes have been thoroughly tested.
+
+## Questions
+How can we add additional functionality for a better user experience.
+
+https://github.com/khcarver1
+
+I can be reached via email at carver.kansas@gmail.com
+
+## Contributing
+
+
+## License
+apache
+
