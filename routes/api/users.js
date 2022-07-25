@@ -38,18 +38,19 @@ router.delete('/delete/:id', async ({ params }, res) => {
     });
 });
 
-router.post('/:userId/friends/:friendId', ( req, res ) => {
-    
-    User.findOneAndUpdate({ _id: req.params.userId }, { new: true }).then((newFriendData) => {
-        userToUpdate = { _id: req.friends }
-        // userToUpdate.friends.push(req.params.friendId);
-        console.log(userToUpdate);
-        res.json({friends: req.params.friendId});
-        console.log({friends: req.params.friendId});
+router.post('/:userId/friends/:friendId', (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { new: true }).then((newFriendData) => {
+        res.json(newFriendData);
     });
 });
-router.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
-    //remove a friend from a user's friend list
+router.delete('/:userId/friends/:friendId', async (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true }).then((deletedFriendData) => {
+        res.json(deletedFriendData);
+    });
+    // User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true }).then((deletedFriendData) => {
+    //     res.json(deletedFriendData);
+    // });
+
 });
 
 

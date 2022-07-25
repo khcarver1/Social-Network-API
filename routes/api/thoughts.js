@@ -24,7 +24,6 @@ router.get('/:id', ({params}, res) => {
 //create a new thought (push the thoughts _id to the associated users "thoughts" array)
 
 router.post('/', (req, res) => {
-    //get all users
     Thought.create(req.body).then((newThought) => {
         res.json(newThought);
         console.log('*** Successfully created new thought ***');
@@ -50,13 +49,16 @@ router.delete('/delete/:id', async ({ params }, res) => {
         console.log('*** Successfully deleted thought *** ' + thoughtData);
     });
 });
-
-
-// /api/thoughts/:thoughtId/reactions
-
-// POST to create a reaction stored in a single thought's reactions array field
-
-// DELETE to pull and remove a reaction by the reaction's reactionId value
+router.post('/:thoughtId/reactions', (req, res) => {
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, { $addToSet: { reactions: req.body } }, { new: true }).then((newReactionData) => {
+        res.json(newReactionData);
+    });
+});
+router.delete('/:thoughtId/reactions/:_id', async (req, res) => {
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, { $pull: { reactions: {_id: req.params._id } } }, { new: true }).then((deleteReactionData) => {
+        res.json(deleteReactionData);
+    });
+});
 
 
 module.exports = router;
